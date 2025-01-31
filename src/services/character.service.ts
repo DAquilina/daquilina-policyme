@@ -65,7 +65,16 @@ export class CharacterService {
     try {
       const response = await (await fetch(this._url)).json();
 
-      this._characterCache = response.characters ?? new Array<Character>();
+      // DEBUG
+      console.log(response);
+
+      this._characterCache = response.body.map((data: string) => {
+
+        return Character.parse(data);
+      }) ?? new Array<Character>();
+
+      // DEBUG
+      console.log(this._characterCache);
 
       this._isCacheValid = true;
 
@@ -91,7 +100,10 @@ export class CharacterService {
         this._url,
         {
           method: "POST",
-          body: JSON.stringify(this._characterCache),
+          body: JSON.stringify(this._characterCache.map((character: Character) => {
+
+            return character.stringify();
+          })),
           headers: {
             "Content-type": "application/json; charset=UTF-8"
           }

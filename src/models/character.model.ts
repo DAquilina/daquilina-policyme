@@ -1,11 +1,13 @@
 import { Class } from "../enum/class.enum";
 import { GenderPresentation } from "../enum/gender-presentation.enum";
+import { Skill } from "../enum/skill.enum";
 
 import { CharacterOverrides } from "../interfaces/character-overrides.interface";
 
 import { AttributeBlock } from "../types/attribute-block.type";
 import { SkillBlock } from "../types/skill-block.type";
 import CharacterUtil from "../util/character-util";
+import SkillModel from "./skill.model";
 
 
 class Character {
@@ -104,6 +106,46 @@ class Character {
       (overrideValues?.selectedClass !== undefined) ? overrideValues.selectedClass : this._class,
       (overrideValues?.attributes !== undefined) ? overrideValues.attributes : this._attributes,
       (overrideValues?.skills !== undefined) ? overrideValues.skills : this._skills
+    );
+  }
+
+
+  stringify(): string {
+
+    return JSON.stringify(
+      {
+        id: this._id,
+        name: this._name,
+        avatarUrl: this._avatarUrl,
+        genderPresentation: this._genderPresentation,
+        selectedClass: this._class,
+        attributes: Array.from(this._attributes),
+        skills: Array.from(this._skills)
+      }
+    );
+  }
+
+
+  static parse(stringifiedCharacter: string): Character {
+
+    const data = JSON.parse(stringifiedCharacter);
+
+    // DEBUG
+    console.log(data);
+
+    return new Character(
+      data.id,
+      data.name,
+      data.avatarUrl,
+      data.genderPresentation,
+      data.selectedClass,
+      new Map(data.attributes),
+      new Map(
+        data.skills.map(([skill, skillData]) => {
+
+          return [skill, SkillModel.parse(skillData)];
+        })
+      )
     );
   }
 }

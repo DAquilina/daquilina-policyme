@@ -50,6 +50,18 @@ class SkillModel {
     this._isGeneric = isGeneric;
     this._specifier = specifier;
   }
+
+
+  static parse(data: any): SkillModel {
+
+    return new SkillModel(
+      data._targetSkill,
+      data._targetAttribute,
+      data._baseValue,
+      data._isGeneric,
+      data._specifier
+    );
+  }
 }
 
 export default SkillModel;

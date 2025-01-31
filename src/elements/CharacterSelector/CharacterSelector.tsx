@@ -33,17 +33,23 @@ function CharacterSelector(props: { onSelect: (character: ICharacterMeta) => voi
   }
 
 
+  function renderCharacterList(): React.ReactNode {
+
+    const nodes = characterList?.map((character: ICharacterMeta) => {
+
+      return <CharacterSelectorTile key={character.id} character={character} onSelect={handleSelect}></CharacterSelectorTile>
+    });
+
+    return nodes;
+  }
+
+
   return (
     <>
       <div className="character-selector-list">
-        {
-          characterList?.map((character: ICharacterMeta) => {
+        {renderCharacterList()}
 
-            return <CharacterSelectorTile character={character} onSelect={handleSelect}></CharacterSelectorTile>
-          })
-        }
-
-        <AddNewCharacterTile character={null} addNewCharacter={handleSelect}></AddNewCharacterTile>
+        <AddNewCharacterTile key="add-new" character={null} addNewCharacter={handleSelect}></AddNewCharacterTile>
       </div>
     </>
   );
