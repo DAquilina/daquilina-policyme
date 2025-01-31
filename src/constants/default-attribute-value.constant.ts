@@ -1,0 +1,1 @@
+export const DEFAULT_ATTRIBUTE_VALUE = 10;

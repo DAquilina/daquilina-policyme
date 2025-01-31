@@ -1,0 +1,7 @@
+@import "../../../styles/variables.scss";
+
+.class-section-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing);
+}

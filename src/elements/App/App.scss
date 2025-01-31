@@ -1,0 +1,40 @@
+@import "../../styles/variables.scss";
+
+.App {
+  min-height: 100vh;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.App-header {
+  align-items: center;
+  background-color: var(--colorBackgroundHeader);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--spacing);
+
+  .main {
+    color: var(--colorTextTitle);
+    font-family: var(--fontFamilyHeader);
+    font-size: var(--fontSizeXl);
+    letter-spacing: 4px;
+  }
+
+  .tagline {
+    color: var(--colorTextLight);
+    font-size: var(--fontSizeLg);
+  }
+}
+
+.App-section {
+  align-items: stretch;
+  background-color: var(--colorBackground);
+  color: var(--colorText);
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: row;
+  justify-content: center;
+  padding: calc(2 * var(--spacing));
+}

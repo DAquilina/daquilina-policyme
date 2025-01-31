@@ -1,0 +1,12 @@
+@import "../../styles/variables.scss";
+
+.character-selector-list {
+  border: var(--borderWidth) solid var(--colorBorder);
+  border-radius: var(--borderRadius);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: var(--spacing) auto;
+  padding: var(--spacing);
+  text-align: center;
+}

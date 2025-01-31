@@ -1,0 +1,6 @@
+@import "../../../styles/variables.scss";
+
+.toggle-button.off {
+  background-color: var(--colorBackground);
+  border: var(--borderWidth) solid var(--colorBorder);
+}

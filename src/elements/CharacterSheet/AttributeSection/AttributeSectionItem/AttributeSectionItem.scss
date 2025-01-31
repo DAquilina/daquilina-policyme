@@ -1,0 +1,41 @@
+@import "../../../../styles/variables.scss";
+
+.attribute-wrapper {
+  border: var(--borderWidth) solid var(--colorBorder);
+  border-radius: var(--borderRadius);
+  flex-basis: 100%;
+  padding: var(--spacing);
+
+  & > * {
+    margin-bottom: calc(var(--spacing) / 2);
+  }
+
+  & > :last-child {
+    margin-bottom: 0;
+  }
+
+  .attribute-label {
+    display: block;
+    font-weight: bold;
+  }
+
+  .attribute-modifier {
+    font-size: var(--fontSizeXl);
+
+    transform: translateX(-4px);
+
+    & > * {
+      vertical-align: middle;
+    }
+
+    .prefix {
+      font-size: var(--fontSizeLg)
+    }
+  }
+
+  .attribute-value {
+    .attribute-magnitude {
+      margin: 0 calc(var(--spacing) / 2);
+    }
+  }
+}

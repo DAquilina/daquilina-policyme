@@ -1,0 +1,41 @@
+@import "../../../../styles/variables.scss";
+
+.skill-section-item {
+  border: var(--borderWidth) solid var(--colorBorder);
+  border-radius: var(--borderRadius);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: calc(var(--spacing) / 2);
+  padding: var(--spacing);
+  width: 100%;
+
+  & > * {
+    flex-basis: 100%;
+  }
+
+  & > :first-child {
+    text-align: left;
+  }
+
+  & > :last-child {
+    text-align: right;
+  }
+
+  .attribute-bonus-group {
+    & > * {
+      vertical-align: middle;
+    }
+
+    .relevant-attribute {
+      font-size: var(--fontSizeSm);
+      margin-left: calc(var(--spacing) / 2);
+    }
+  }
+
+  .base-value-group {
+    .skill-base-value {
+      margin: 0 calc(var(--spacing) / 2);
+    }
+  }
+}

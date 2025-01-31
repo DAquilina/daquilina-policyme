@@ -1,0 +1,27 @@
+@import "../../../../styles/variables.scss";
+
+.class-tile {
+  background-color: var(--colorBackground);
+  border: var(--borderWidth) solid var(--colorBorder);
+  border-radius: var(--borderRadius);
+  cursor: pointer;
+  opacity: 1.0;
+  padding: var(--spacing);
+
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+
+  &:active,
+  &:focus,
+  &:hover {
+    background-color: var(--colorHover);
+  }
+
+  &.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  &.selected {
+    background-color: var(--colorAccent);
+  }
+}

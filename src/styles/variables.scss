@@ -1,0 +1,41 @@
+@font-face {
+  font-family: Dragon Hunter;
+  src: url("../assets/DragonHunter-9Ynxj.otf") format("opentype");
+}
+
+:root {
+  --fontFamily: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  --fontFamilyCode: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+  --fontFamilyHeader: Dragon Hunter, var(--fontFamily);
+
+  --fontSizeSm: 10px;
+  --fontSize: 14px;
+  --fontSizeLg: 20px;
+  --fontSizeXl: 30px;
+
+  --spacing: 1rem;
+
+  --colorAccent: #f5021b;
+  --colorBackground: #FFFFFF;
+  --colorBackgroundHeader: var(--colorText);
+  --colorBackgroundButton: var(--colorAccent);
+  
+  --colorText: #1a0303;
+  --colorTextButton: var(--colorText);
+  --colorTextLight: var(--colorBackground);
+  --colorTextTitle: var(--colorAccent);
+  
+  --colorBorder: var(--colorText);
+  --colorHover: rgba(5, 24, 42, 0.2);
+  --colorTransparent: rgba(0, 0, 0, 0.0);
+
+  --borderRadius: 10px;
+  --borderRadiusSm: 5px;
+
+  --borderWidth: 1px;
+  --borderWidthThick: 3px;
+
+  --boxShadow: var(--colorText) 3px 3px 10px -2px;
+
+  --tileSize: 250px;
+}

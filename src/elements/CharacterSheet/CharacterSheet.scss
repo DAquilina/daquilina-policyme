@@ -1,0 +1,67 @@
+@import "../../styles/variables.scss";
+
+.character-sheet-wrapper {
+  border: var(--borderWidthThick) solid var(--colorBorder);
+  flex-basis: 100%;
+  max-width: 1024px;
+  padding: var(--spacing);
+
+  .top-section {
+    display: flex;
+    flex-direction: row;
+    gap: var(--spacing);
+
+    .avatar-section-wrapper {
+      border: var(--borderWidth) solid var(--colorBorder);
+      border-radius: var(--borderRadius);
+      flex-basis: 25%;
+      max-width: 25%;
+      padding: var(--spacing);
+
+      .avatar-actions {
+        & > * {
+          margin-bottom: calc(var(--spacing) / 2);
+        }
+  
+        & > :last-child {
+          margin-bottom: 0;
+        }
+
+        & > button {
+          display: block;
+          width: 100%;
+        }
+
+        .gender-presentation {
+          aside {
+            margin-bottom: calc(var(--spacing) / 2);
+          }
+
+          .toggle-buttons {
+            display: flex;
+            gap: calc(var(--spacing) / 2);
+
+            & > * {
+              flex-basis: 25%;
+            }
+          }
+        }
+      }
+
+      .avatar-wrapper {
+        height: 200px;
+        margin-bottom: var(--spacing);
+
+        img {
+          max-height: 100%;
+          max-width: 100%;
+        }
+      }
+    }
+
+    .attributes-section-wrapper {
+      flex-basis: 75%;
+      max-width: 75%;
+    }
+  }
+}

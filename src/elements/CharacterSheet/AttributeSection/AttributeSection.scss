@@ -1,0 +1,12 @@
+@import "../../../styles/variables.scss";
+
+.attribute-section-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.remaining-attribute-points {
+  margin: var(--spacing) auto;
+  text-align: left;
+}
