@@ -11,7 +11,11 @@ function CharacterSelectorTile(props: { character: ICharacterMeta | null, onSele
         <div className="avatar-container">
           <img src={props.character.avatarUrl} alt="" />
         </div>
-        <span className="character-name">{props.character.name}</span>
+        <span className="character-name">
+          <span>
+            {props.character.name}
+          </span>
+        </span>
       </div>
     </>
   );

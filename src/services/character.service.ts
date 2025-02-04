@@ -65,16 +65,10 @@ export class CharacterService {
     try {
       const response = await (await fetch(this._url)).json();
 
-      // DEBUG
-      console.log(response);
-
       this._characterCache = response.body.map((data: string) => {
 
         return Character.parse(data);
       }) ?? new Array<Character>();
-
-      // DEBUG
-      console.log(this._characterCache);
 
       this._isCacheValid = true;
 

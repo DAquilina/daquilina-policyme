@@ -16,6 +16,7 @@ import { Skill } from "../../enum/skill.enum";
 
 import { ICharacterMeta } from "../../interfaces/character-meta.interface";
 
+import AttributeItem from "../../models/attribute-item.model";
 import Character from "../../models/character.model";
 
 import { serviceContainer, ServiceContext } from "../../services/provider";
@@ -24,7 +25,6 @@ import Calculations from "../../util/calculations";
 import CharacterUtil from "../../util/character-util";
 
 import "./CharacterSheet.scss";
-import AttributeItem from "../../models/attribute-item.model";
 
 
 function CharacterSheet(props: { characterMeta: ICharacterMeta, onCancel: () => void }) {

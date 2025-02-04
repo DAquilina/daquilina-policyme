@@ -38,7 +38,7 @@ function App() {
   function renderCharacterSheet(): React.ReactNode {
 
     return (
-      <CharacterSheet characterMeta={activeCharacter} onCancel={() => { setActiveCharacter(undefined) }}></CharacterSheet>
+      <CharacterSheet characterMeta={activeCharacter} onCancel={() => { setActiveCharacter(null); }}></CharacterSheet>
     );
   }
 

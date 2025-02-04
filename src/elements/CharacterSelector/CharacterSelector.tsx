@@ -24,7 +24,7 @@ function CharacterSelector(props: { onSelect: (character: ICharacterMeta) => voi
     }
 
     updateCharacterList();
-  }, [characterList, serviceContext]);
+  }, [serviceContext.services.characterService]);
 
 
   function handleSelect(character: ICharacterMeta): void {
@@ -38,7 +38,7 @@ function CharacterSelector(props: { onSelect: (character: ICharacterMeta) => voi
     const nodes = characterList?.map((character: ICharacterMeta) => {
 
       return <CharacterSelectorTile key={character.id} character={character} onSelect={handleSelect}></CharacterSelectorTile>
-    });
+    }) ?? <></>;
 
     return nodes;
   }

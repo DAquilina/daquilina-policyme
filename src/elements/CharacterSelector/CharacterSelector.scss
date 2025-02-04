@@ -1,10 +1,10 @@
 @import "../../styles/variables.scss";
 
 .character-selector-list {
-  border: var(--borderWidth) solid var(--colorBorder);
-  border-radius: var(--borderRadius);
+  align-items: center;
   display: flex;
   flex-wrap: wrap;
+  gap: var(--spacing);
   justify-content: center;
   margin: var(--spacing) auto;
   padding: var(--spacing);

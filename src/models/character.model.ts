@@ -1,13 +1,14 @@
+import SkillModel from "./skill.model";
+
 import { Class } from "../enum/class.enum";
 import { GenderPresentation } from "../enum/gender-presentation.enum";
-import { Skill } from "../enum/skill.enum";
 
 import { CharacterOverrides } from "../interfaces/character-overrides.interface";
 
 import { AttributeBlock } from "../types/attribute-block.type";
 import { SkillBlock } from "../types/skill-block.type";
+
 import CharacterUtil from "../util/character-util";
-import SkillModel from "./skill.model";
 
 
 class Character {
@@ -129,9 +130,6 @@ class Character {
   static parse(stringifiedCharacter: string): Character {
 
     const data = JSON.parse(stringifiedCharacter);
-
-    // DEBUG
-    console.log(data);
 
     return new Character(
       data.id,
