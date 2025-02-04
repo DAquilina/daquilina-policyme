@@ -53,6 +53,10 @@ function CharacterSheet(props: { characterMeta: ICharacterMeta, onCancel: () => 
               props.characterMeta.avatarUrl
             )
           );
+
+          setRemainingAttributePoints(
+            TOTAL_ATTRIBUTE_POINTS - Calculations.calculateSpentAttributePoints(result.attributes)
+          );
   
           setIsDirty(false);
         });

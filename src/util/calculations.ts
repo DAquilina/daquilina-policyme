@@ -2,6 +2,7 @@ import { BASE_SKILL_POINTS } from "../constants/base-skill-points.constant";
 import { DEFAULT_ATTRIBUTE_VALUE } from "../constants/default-attribute-value.constant";
 import { POINT_BUY_TABLE } from "../constants/point-buy-table.constant";
 import { SKILL_POINTS_PER_INTELLIGENCE } from "../constants/skill-points-per-intelligence";
+
 import SkillModel from "../models/skill.model";
 
 import { AttributeBlock } from "../types/attribute-block.type";
@@ -25,13 +26,18 @@ class Calculations {
 
     let totalCost = 0;
 
-    const modifier: number = (initialValue > targetValue) ? -1 : 1;
-
-    for (let index = initialValue; index < targetValue; index += modifier) {
-      totalCost += POINT_BUY_TABLE[index];
+    if (initialValue > targetValue) {
+      for (let index = targetValue; index < initialValue; index++) {
+        totalCost -= POINT_BUY_TABLE[index];
+      }
+    }
+    else {
+      for (let index = initialValue; index < targetValue; index++) {
+        totalCost += POINT_BUY_TABLE[index];
+      }
     }
 
-    return totalCost * modifier;
+    return totalCost;
   }
 
 
