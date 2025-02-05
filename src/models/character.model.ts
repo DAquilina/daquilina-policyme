@@ -3,7 +3,8 @@ import SkillModel from "./skill.model";
 import { Class } from "../enum/class.enum";
 import { GenderPresentation } from "../enum/gender-presentation.enum";
 
-import { CharacterOverrides } from "../interfaces/character-overrides.interface";
+import { ICharacterOverrides } from "../interfaces/character-overrides.interface";
+import { IModel } from "../interfaces/model.interface";
 
 import { AttributeBlock } from "../types/attribute-block.type";
 import { SkillBlock } from "../types/skill-block.type";
@@ -11,7 +12,7 @@ import { SkillBlock } from "../types/skill-block.type";
 import CharacterUtil from "../util/character-util";
 
 
-class Character {
+class Character implements IModel {
 
   get attributes(): AttributeBlock {
 
@@ -20,25 +21,16 @@ class Character {
   private _attributes: AttributeBlock;
 
 
-  get selectedClass(): Class {
+  get avatarUrl(): string {
 
-    return this._class;
+    return this._avatarUrl;
   }
-  set selectedClass(newClass: Class) {
-    // TODO: minimum requirements
-
-    this._class = newClass;
-  }
-  private _class: Class;
+  private _avatarUrl: string;
 
 
   get genderPresentation(): GenderPresentation {
 
     return this._genderPresentation;
-  }
-  set genderPresentation(newValue: GenderPresentation) {
-
-    this._genderPresentation = newValue;
   }
   private _genderPresentation: GenderPresentation;
 
@@ -50,25 +42,25 @@ class Character {
   private _id: string;
 
 
+  get level(): number {
+
+    return this._level;
+  }
+  private _level: number;
+
+
   get name(): string {
 
     return this._name;
   }
-  set name(newName: string) {
-    this._name = newName;
-  }
   private _name: string;
 
 
-  get avatarUrl(): string {
+  get selectedClass(): Class {
 
-    return this._avatarUrl;
+    return this._class;
   }
-  set avatarUrl(newUrl: string) {
-
-    this._avatarUrl = newUrl;
-  }
-  private _avatarUrl: string;
+  private _class: Class;
 
 
   get skills(): SkillBlock {
@@ -78,35 +70,38 @@ class Character {
 
 
   constructor(
-      id?: string,
-      name?: string,
-      avatarUrl?: string,
-      genderPresentation?: GenderPresentation,
-      selectedClass?: Class,
-      attributes?: AttributeBlock,
-      skills?: SkillBlock
+      id: string,
+      defaultValues: ICharacterOverrides
   ) {
 
     this._id = id;
-    this._name = name;
-    this._avatarUrl = avatarUrl;
-    this._genderPresentation = genderPresentation;
-    this._class = selectedClass;
-    this._attributes = attributes ?? CharacterUtil.generateDefaultAttributeBlock();
-    this._skills = skills ?? CharacterUtil.generateDefaultSkillBlock();
+
+    this._spreadValues(defaultValues);
+
+    if (!this._attributes?.size) {
+      this._attributes = defaultValues?.attributes ?? CharacterUtil.generateDefaultAttributeBlock();
+    }
+
+    if (!this._skills?.size) {
+      this._skills = CharacterUtil.generateDefaultSkillBlock();
+    }
   }
 
 
-  clone(overrideValues?: CharacterOverrides): Character {
+  clone(overrideValues?: ICharacterOverrides): Character {
 
     return new Character(
       this._id,
-      (overrideValues?.name !== undefined) ? overrideValues.name : this._name,
-      (overrideValues?.avatarUrl !== undefined) ? overrideValues.avatarUrl : this._avatarUrl,
-      (overrideValues?.genderPresentation !== undefined) ? overrideValues.genderPresentation : this._genderPresentation,
-      (overrideValues?.selectedClass !== undefined) ? overrideValues.selectedClass : this._class,
-      (overrideValues?.attributes !== undefined) ? overrideValues.attributes : this._attributes,
-      (overrideValues?.skills !== undefined) ? overrideValues.skills : this._skills
+      {
+        avatarUrl: this._avatarUrl,
+        attributes: this._attributes,
+        genderPresentation: this._genderPresentation,
+        level: this._level,
+        name: this._name,
+        selectedClass: this._class,
+        skills: this._skills,
+        ...overrideValues
+      }
     );
   }
 
@@ -127,23 +122,34 @@ class Character {
   }
 
 
+  private _spreadValues(values: ICharacterOverrides): void {
+
+    this._avatarUrl = (values?.avatarUrl !== undefined) ? values.avatarUrl : this._avatarUrl;
+    this._attributes = (values?.attributes !== undefined) ? values.attributes : this._attributes;
+    this._genderPresentation = (values?.genderPresentation !== undefined) ? values.genderPresentation : this._genderPresentation;
+    this._level = (values?.level !== undefined) ? values.level : this._level ?? 1;
+    this._name = ((values?.name !== undefined) ? values.name : this._name) ?? "";
+    this._class = (values?.selectedClass !== undefined) ? values.selectedClass : this._class;
+    this._skills = (values?.skills !== undefined) ? values.skills : this._skills;
+  }
+
+
   static parse(stringifiedCharacter: string): Character {
 
     const data = JSON.parse(stringifiedCharacter);
 
     return new Character(
       data.id,
-      data.name,
-      data.avatarUrl,
-      data.genderPresentation,
-      data.selectedClass,
-      new Map(data.attributes),
-      new Map(
-        data.skills.map(([skill, skillData]) => {
-
-          return [skill, SkillModel.parse(skillData)];
-        })
-      )
+      {
+        ...data,
+        attributes: new Map(data.attributes),
+        skills: new Map(
+          data.skills?.map(([skill, skillData]) => {
+  
+            return [skill, SkillModel.parse(skillData)];
+          })
+        )
+      }
     );
   }
 }

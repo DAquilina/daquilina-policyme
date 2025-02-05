@@ -5,11 +5,12 @@ import { AttributeBlock } from "../types/attribute-block.type";
 import { SkillBlock } from "../types/skill-block.type";
 
 
-export interface CharacterOverrides {
-  name?: string;
+export interface ICharacterOverrides {
+  attributes?: AttributeBlock;
   avatarUrl?: string;
   genderPresentation?: GenderPresentation;
+  name?: string;
+  level?: number;
   selectedClass?: Class;
-  attributes?: AttributeBlock;
   skills?: SkillBlock;
 }

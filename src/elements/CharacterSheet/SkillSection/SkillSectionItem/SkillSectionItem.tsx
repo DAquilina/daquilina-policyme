@@ -1,3 +1,5 @@
+import React from "react";
+
 import DecrementButton from "../../../Shared/DecrementButton/DecrementButton";
 import IncrementButton from "../../../Shared/IncrementButton/IncrementButton";
 
@@ -8,8 +10,24 @@ import "./SkillSectionItem.scss";
 
 
 function SkillSectionItem(
-    props: { skill: SkillModel, attributeBonus: AttributeItem, remainingSkillPoints: number, onChange: (newBaseValue: number) => void }
+    props: {
+      attributeBonus: AttributeItem,
+      maxSkillRanks: number,
+      remainingSkillPoints: number,
+      skill: SkillModel,
+      onChange: (newBaseValue: number) => void
+    }
 ) {
+
+  const [canDecrement, setCanDecrement] = React.useState(true);
+  const [canIncrement, setCanIncrement] = React.useState(true);
+
+  React.useLayoutEffect(() => {
+
+    setCanDecrement(props.skill.baseValue > 0);
+    setCanIncrement((props.skill.baseValue < props.maxSkillRanks) && (props.remainingSkillPoints > 0));
+  }, [props.skill, props.maxSkillRanks, props.remainingSkillPoints]);
+
 
   function handleDecrement(): void {
 
@@ -48,9 +66,9 @@ function SkillSectionItem(
         <span className="skill-name">{props.skill.name}</span>
 
         <div className="base-value-group">
-          <DecrementButton isDisabled={props.skill.baseValue <= 0} onClick={handleDecrement}></DecrementButton>
+          <DecrementButton isDisabled={!canDecrement} onClick={handleDecrement}></DecrementButton>
           <span className="skill-base-value">{props.skill.baseValue}</span>
-          <IncrementButton isDisabled={props.remainingSkillPoints <= 0} onClick={handleIncrement}></IncrementButton>
+          <IncrementButton isDisabled={!canIncrement} onClick={handleIncrement}></IncrementButton>
         </div>
 
         <span>+</span>

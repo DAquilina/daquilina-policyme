@@ -35,7 +35,9 @@
 
   .base-value-group {
     .skill-base-value {
+      display: inline-block;
       margin: 0 calc(var(--spacing) / 2);
+      width: 20px;
     }
   }
 }

@@ -3,10 +3,12 @@ import React from "react";
 import AttributeSection from "./AttributeSection/AttributeSection";
 import CharacterSheetActions from "./CharacterSheetActions/CharacterSheetActions";
 import ClassSection from "./ClassSection/ClassSection";
+import LevelSection from "./LevelSection/LevelSection";
 import SkillSection from "./SkillSection/SkillSection";
 import ToggleButton from "../Shared/ToggleButton/ToggleButton";
 
 import { BASE_SKILL_POINTS } from "../../constants/base-skill-points.constant";
+import { MAX_CHARACTER_LEVEL } from "../../constants/max-character-level.constant";
 import { TOTAL_ATTRIBUTE_POINTS } from "../../constants/total-attribute-points.constant";
 
 import { Attribute } from "../../enum/attribute.enum";
@@ -33,29 +35,47 @@ function CharacterSheet(props: { characterMeta: ICharacterMeta, onCancel: () => 
 
   const [character, setCharacter] = React.useState<Character>(null);
 
+  const [maxSkillRanks, setMaxSkillRanks] = React.useState(null);
+
   const [remainingAttributePoints, setRemainingAttributePoints] = React.useState<number>(TOTAL_ATTRIBUTE_POINTS);
 
-  const [remainingSkillPoints, setRemainingSkillPoints] = React.useState<number>(BASE_SKILL_POINTS)
+  const [remainingSkillPoints, setRemainingSkillPoints] = React.useState<number>(BASE_SKILL_POINTS);
 
   const serviceContext: ServiceContext = React.useContext(serviceContainer);
+
 
   React.useEffect(() => {
 
     if (!character) {
       serviceContext.services.characterService.getCharacterById(props.characterMeta.id)
         .then((result: Character) => {
-  
-          setCharacter(
-            result ??
+
+          const newCharacter = result ??
             new Character(
               props.characterMeta.id,
-              props.characterMeta.name,
-              props.characterMeta.avatarUrl
+              {
+                name: props.characterMeta.name,
+                level: 1,
+                avatarUrl: props.characterMeta.avatarUrl
+              }
+            );
+  
+          setCharacter(newCharacter);
+
+          setRemainingAttributePoints(
+            TOTAL_ATTRIBUTE_POINTS - Calculations.calculateSpentAttributePoints(newCharacter.attributes)
+          );
+
+          setRemainingSkillPoints(
+            Calculations.calculateRemainingSkillPoints(
+              newCharacter.level,
+              new AttributeItem(Attribute.Intelligence, newCharacter.attributes.get(Attribute.Intelligence)).mod,
+              newCharacter.skills
             )
           );
 
-          setRemainingAttributePoints(
-            TOTAL_ATTRIBUTE_POINTS - Calculations.calculateSpentAttributePoints(result.attributes)
+          setMaxSkillRanks(
+            Calculations.calculateMaxSkillRanksForCurrentLevel(result.level ?? 1)
           );
   
           setIsDirty(false);
@@ -129,7 +149,9 @@ function CharacterSheet(props: { characterMeta: ICharacterMeta, onCancel: () => 
     newAttributes.set(attribute, newValue);
 
     setRemainingAttributePoints(TOTAL_ATTRIBUTE_POINTS - Calculations.calculateSpentAttributePoints(newAttributes));
+
     setRemainingSkillPoints(Calculations.calculateRemainingSkillPoints(
+      character.level ?? 1,
       new AttributeItem(Attribute.Intelligence, newAttributes.get(Attribute.Intelligence)).mod, 
       character.skills
     ));
@@ -141,6 +163,26 @@ function CharacterSheet(props: { characterMeta: ICharacterMeta, onCancel: () => 
         }
       )
     );
+  }
+
+
+  function updateLevel(newLevel: number) : void {
+
+    const newCharacter = character.clone({ level: newLevel })
+
+    setRemainingSkillPoints(
+      Calculations.calculateRemainingSkillPoints(
+        newLevel,
+        new AttributeItem(Attribute.Intelligence, newCharacter.attributes.get(Attribute.Intelligence)).mod,
+        character.skills
+      )
+    );
+
+    setMaxSkillRanks(
+      Calculations.calculateMaxSkillRanksForCurrentLevel(newLevel)
+    );
+
+    setCharacter(newCharacter);
   }
 
 
@@ -159,22 +201,21 @@ function CharacterSheet(props: { characterMeta: ICharacterMeta, onCancel: () => 
     const newSkills = character.skills;
     const targetSkillModel = newSkills.get(skill);
 
-    targetSkillModel.baseValue = newBaseValue;
+    newSkills.set(skill, targetSkillModel.clone({ baseValue: newBaseValue }));
 
-    newSkills.set(skill, targetSkillModel);
+    const newCharacter = character.clone(
+      {
+        skills: newSkills
+      }
+    )
 
     setRemainingSkillPoints(Calculations.calculateRemainingSkillPoints(
-      new AttributeItem(Attribute.Intelligence, character.attributes.get(Attribute.Intelligence)).mod,
+      newCharacter.level ?? 1,
+      new AttributeItem(Attribute.Intelligence, newCharacter.attributes.get(Attribute.Intelligence)).mod,
       newSkills
     ));
 
-    setCharacter(
-      character.clone(
-        {
-          skills: newSkills
-        }
-      )
-    );
+    setCharacter(newCharacter);
   }
 
 
@@ -226,6 +267,12 @@ function CharacterSheet(props: { characterMeta: ICharacterMeta, onCancel: () => 
                 </div>
               </div>
             </div>
+
+            <LevelSection
+              currentLevel={character.level ?? 1}
+              maxLevel={MAX_CHARACTER_LEVEL}
+              onChange={updateLevel}
+            ></LevelSection>
           </div>
 
           <div className="attributes-section-wrapper">
@@ -248,8 +295,9 @@ function CharacterSheet(props: { characterMeta: ICharacterMeta, onCancel: () => 
           <SkillSection
             skills={character.skills}
             attributes={character.attributes}
-            onChange={updateSkill}
+            maxSkillRanks={maxSkillRanks}
             remainingSkillPoints={remainingSkillPoints}
+            onChange={updateSkill}
           >
           </SkillSection>
         </div>

@@ -1,9 +1,12 @@
 import { Attribute } from "../enum/attribute.enum";
+import { ICharacterClassOverrides } from "../interfaces/character-class-overrides.interface";
+
+import { IModel } from "../interfaces/model.interface";
 
 import { AttributeBlock } from "../types/attribute-block.type";
 
 
-class CharacterClass {
+class CharacterClass implements IModel {
 
     get name() {
 
@@ -12,6 +15,10 @@ class CharacterClass {
     private _name: string;
 
 
+    get minimumAttributeRequirements(): AttributeBlock {
+
+        return this._minimumAttributeRequirements;
+    }
     private _minimumAttributeRequirements: AttributeBlock;
 
 
@@ -19,6 +26,15 @@ class CharacterClass {
 
         this._name = name;
         this._minimumAttributeRequirements = minimumRequirements;
+    }
+
+
+    clone(overrideValues: ICharacterClassOverrides): CharacterClass {
+
+        return new CharacterClass(
+            (overrideValues.name !== undefined) ? overrideValues.name : this._name,
+            (overrideValues.minimumAttributeRequirements !== undefined) ? overrideValues.minimumAttributeRequirements : this._minimumAttributeRequirements
+        );
     }
 
 

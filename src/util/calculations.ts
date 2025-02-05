@@ -1,5 +1,7 @@
+import { BASE_MAX_SKILL_RANKS } from "../constants/base-max-skill-rank.constant";
 import { BASE_SKILL_POINTS } from "../constants/base-skill-points.constant";
 import { DEFAULT_ATTRIBUTE_VALUE } from "../constants/default-attribute-value.constant";
+import { MAX_SKILL_RANKS_PER_LEVEL } from "../constants/max-skill-ranks-per-level.constant";
 import { POINT_BUY_TABLE } from "../constants/point-buy-table.constant";
 import { SKILL_POINTS_PER_INTELLIGENCE } from "../constants/skill-points-per-intelligence";
 
@@ -10,6 +12,19 @@ import { SkillBlock } from "../types/skill-block.type";
 
 
 class Calculations {
+
+  /**
+   * Determines the maximum number of skill ranks a player may allocate to any one skill of a character at the given level 
+   *
+   * @param level 
+   * @returns 
+   */
+  static calculateMaxSkillRanksForCurrentLevel(level: number): number {
+
+    return (BASE_MAX_SKILL_RANKS + (level * MAX_SKILL_RANKS_PER_LEVEL));
+  }
+
+
   /**
    * Determines the cost to increase an attribute from the initial value to the given target value.
    * If the value is decreasing, will instead indicate the number of points returned by returning
@@ -47,9 +62,9 @@ class Calculations {
    * @param intelligenceModifier 
    * @param skills 
    */
-  static calculateRemainingSkillPoints(intelligenceModifier: number, skills: SkillBlock): number {
+  static calculateRemainingSkillPoints(characterLevel: number, intelligenceModifier: number, skills: SkillBlock): number {
 
-    let totalAvailablePoints = BASE_SKILL_POINTS + (intelligenceModifier * SKILL_POINTS_PER_INTELLIGENCE);
+    let totalAvailablePoints = (BASE_SKILL_POINTS + (intelligenceModifier * SKILL_POINTS_PER_INTELLIGENCE) * characterLevel);
 
     skills.forEach((skill: SkillModel) => {
 

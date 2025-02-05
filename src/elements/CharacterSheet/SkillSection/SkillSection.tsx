@@ -14,7 +14,13 @@ import { AttributeBlock } from "../../../types/attribute-block.type";
 
 
 function SkillSection(
-    props: { skills: SkillBlock, attributes: AttributeBlock, remainingSkillPoints: number, onChange: (skill: Skill, newValue: number) => void}
+    props: {
+      attributes: AttributeBlock,
+      maxSkillRanks: number,
+      remainingSkillPoints: number,
+      skills: SkillBlock,
+      onChange: (skill: Skill, newValue: number) => void
+    }
 ) {
 
   function handleChange(skill: Skill, newBaseValue: number): void {
@@ -48,9 +54,10 @@ function SkillSection(
     return (
       <SkillSectionItem
         key={skill.name}
-        skill={skill}
         attributeBonus={new AttributeItem(skill.targetAttribute, props.attributes.get(skill.targetAttribute))}
+        maxSkillRanks={props.maxSkillRanks}
         remainingSkillPoints={props.remainingSkillPoints}
+        skill={skill}
         onChange={(newBaseValue: number) => { handleChange(skill.name, newBaseValue) }}>
       </SkillSectionItem>
     );

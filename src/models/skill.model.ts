@@ -1,8 +1,11 @@
 import { Attribute } from "../enum/attribute.enum";
 import { Skill } from "../enum/skill.enum";
 
+import { IModel } from "../interfaces/model.interface";
+import { ISkillOverrides } from "../interfaces/skill-overrides.interface";
 
-class SkillModel {
+
+class SkillModel implements IModel {
 
   get baseValue(): number {
 
@@ -49,6 +52,18 @@ class SkillModel {
     this._baseValue = baseValue;
     this._isGeneric = isGeneric;
     this._specifier = specifier;
+  }
+
+
+  clone(overrideValues: ISkillOverrides): SkillModel {
+
+    return new SkillModel(
+      (overrideValues?.targetSkill !== undefined) ? overrideValues.targetSkill : this._targetSkill,
+      (overrideValues?.targetAttribute !== undefined) ? overrideValues.targetAttribute : this._targetAttribute,
+      (overrideValues?.baseValue !== undefined) ? overrideValues.baseValue : this._baseValue,
+      (overrideValues?.isGeneric !== undefined) ? overrideValues.isGeneric : this._isGeneric,
+      (overrideValues?.specifier !== undefined) ? overrideValues.specifier : this._specifier
+    );
   }
 
 

@@ -1,7 +1,7 @@
 import "./DecrementButton.scss";
 
 
-function DecrementButton(props: { isDisabled: boolean, onClick: () => void}) {
+function DecrementButton(props: { isDisabled?: boolean, onClick: () => void}) {
 
   return (
     <>

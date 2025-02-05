@@ -1,7 +1,7 @@
 import "./IncrementButton.scss";
 
 
-function IncrementButton(props: { isDisabled: boolean, onClick: () => void}) {
+function IncrementButton(props: { isDisabled?: boolean, onClick: () => void}) {
 
   return (
     <>
