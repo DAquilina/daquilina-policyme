@@ -1,7 +1,23 @@
-# recruiting-webapp-character
+# DAquilina's Character Sheet (lite)
+
+## Description
+
+A miniature character builder for a generic D20 system which is currently a bit of a mix between 5e and Pathfinder.
+
+The was a technical assessment for PolicyMe that I took a bit too far and have since updated to fix bugs and add features. It will be a hobby project
+which I periodically come back to as I get motivated to practice React or if there's a desire/need to polish it into something that's worth sharing.
+
+Feel free to fork it if you want to use it for your own purposes, but if you do so please change the USER_ID constant to something different. I don't
+plan to keep anything meaningful on here, but I would appreciate it if my test data didn't get overwritten.
+
+## Original Assignment (unmodified)
+
+### recruiting-webapp-character
+
 React coding test
 
-# Create a repository from this template
+### Create a repository from this template
+
 - Click on `Use this template` dropdown on this repo page.
 - select `Create a new repository`
 - Under Owner, use your personal account and **NOT** `policyme-recruiting`
@@ -9,7 +25,8 @@ React coding test
 - Select `Public` as visibility
 - Click `Create repository`
 
-# Run the application
+### Run the application
+
 - Clone the newly created repo locally
 - Run the following command to install node modules
 ```
@@ -20,15 +37,16 @@ npm i
 npm start
 ```
 
-# Typescript
+### Typescript
 
 Typescript has been added to this project. It is setup to be optional. You are not required to use it. It has been added for those who prefer developing with Typescript over Javascript.
 
-# Submitting your code
+### Submitting your code
+
 - Make sure your app can be set up and run via the following two commands: `npm i` and `npm start`
 - Reply to the coding exercise email you received from our team with the link to this new public repository.
 
-# Instructions
+### Instructions
 
 You will build a small web app around creating a character sheet for a tabletop RPG game like DnD, Pathfinder etc.
 
@@ -44,16 +62,15 @@ Styling is not important, so long as the JS functionality is present and usable.
 
 The 2 hours begins once you've read these instructions and run the application.
 
-## What is a character sheet?
+### What is a character sheet?
 
 Character sheets are defined by the following high-level concepts
-- Attributes: This represents a character's raw abilities 
+
+- Attributes: This represents a character's raw abilities
 - Attribute Modifier: calculated using the related Attribute, this value affects a character's skills
 - Skills: A character's ability to perform a specific action
 
-
-
-## Requirements
+#### Requirements
 
 1. Create state and controls for each of the 6 attributes (see `ATTRIBUTE_LIST`) so they can be incremented/decremented independently.
 2. Display classes on the screen (see `CLASS_LIST`) and visually change the UI when the character meets the minimum requirements for that class, that is, all attributes are greater than or equal to the class minimums

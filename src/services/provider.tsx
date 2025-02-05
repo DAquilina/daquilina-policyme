@@ -1,6 +1,7 @@
 import React from "react";
 
 import { CharacterService } from "./character.service";
+import { USER_ID } from "../constants/user-id.constant";
 
 
 const serviceContainer = React.createContext(null);
@@ -13,7 +14,7 @@ type ServiceContext = {
 };
 
 const services = {
-  characterService: new CharacterService("DAquilina")
+  characterService: new CharacterService(USER_ID)
 };
 
 const ServiceProvider = (props: { children: any }) => {
