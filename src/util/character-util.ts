@@ -17,6 +17,13 @@ import { SkillBlock } from "../types/skill-block.type";
 
 class CharacterUtil {
 
+  /**
+   * Determines if the given attributes meet the minimum requirements for the given class.
+   *
+   * @param className 
+   * @param characterAttributes 
+   * @returns 
+   */
   static doesCharacterMeetMinimumRequirementsForClass(className: Class, characterAttributes: AttributeBlock): boolean {
 
     let requirementsMet = true;
@@ -45,6 +52,11 @@ class CharacterUtil {
   }
 
 
+  /**
+   * Generates a skill block for a new character
+   *
+   * @returns 
+   */
   static generateDefaultSkillBlock(): SkillBlock {
 
     return new Map<Skill, SkillModel>(
@@ -56,6 +68,13 @@ class CharacterUtil {
   }
 
 
+  /**
+   * Generates a string filter for avatar images based on the given criteria
+   *
+   * @param className 
+   * @param genderPresentation 
+   * @returns 
+   */
   static getAvatarFilter(className?: Class, genderPresentation?: GenderPresentation): string {
 
     let filter = "";
@@ -72,12 +91,21 @@ class CharacterUtil {
   }
 
 
+  /**
+   * @param className 
+   * @param genderPresentation 
+   * @returns A random avatar image URL for the given class
+   */
   static getClassAvatarUrl(className: Class, genderPresentation?: GenderPresentation): string {
 
     return CharacterUtil.getRandomAvatarUrl(CharacterUtil.getAvatarFilter(className, genderPresentation));
   }
 
 
+  /**
+   * @param filter 
+   * @returns A random avatar image URL
+   */
   static getRandomAvatarUrl(filter?: string): string {
 
     const set = [...CHARACTER_CLASS_IMAGES, ...CHARACTER_MISC_IMAGES].filter(
